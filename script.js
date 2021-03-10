@@ -16,7 +16,7 @@ let currentActiveCard = 0;
 // Store DOM cards
 const cardsEl = [];
 
-Store card data
+// Store card data
 const cardsData = getCardsData();
 
 // const cardsData = [
@@ -80,13 +80,21 @@ function updateCurrentText() {
   currentEl.innerText = `${currentActiveCard + 1}/${cardsEl.length}`
 }
 
-// Get cards from local storage
+// GET cards from localStorage
 function getCardsData() { 
   // use the API which is local storage and then the getItem
   // localStorage only stores 'strings', so we will take the array and turn it into a string and then store it
   // when we take it back out, we need to parse it back into an array, so we run it thru JSON.parse()
   const cards = JSON.parse(localStorage.getItem("cards"));
   return cards === null ? [] : cards;
+}
+
+// SET| Add cards to localStorage
+function setCardsData(cards) { 
+  // we want to stringify this 'arr' SO we want to run it thru JSON
+  localStorage.setItem("cards", JSON.stringify(cards));
+  window.location.reload();
+
 }
 
 createCards();
@@ -130,3 +138,38 @@ prevBtn.addEventListener("click", () => {
 showBtn.addEventListener("click", () => addContainer.classList.add('show'))
 // Hide add container
 hideBtn.addEventListener("click", () => addContainer.classList.remove('show'))
+
+
+// Add new card
+addCardBtn.addEventListener('click', () => { 
+  const question = questionEl.value;
+  const answer = answerEl.value;
+
+  if(question.trim() && answer.trim()) { 
+    const newCard = {question, answer}
+
+    createCard(newCard);
+
+    // Clear the inputs
+    questionEl.value = '';
+    answerEl.value = '';
+
+    // Hide add container
+    addContainer.classList.remove('show')
+
+    cardsData.push(newCard)
+    // save to localStorage
+    setCardsData(cardsData)
+  }
+})
+
+// Clear cards button
+clearBtn.addEventListener('click', () => { 
+  localStorage.clear(); 
+  cardsContainer.innerHTML = '';
+  window.location.reload();
+})
+
+// 
+// Delete card individually - feature to be added
+// 
