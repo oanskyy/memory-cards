@@ -80,5 +80,41 @@ function updateCurrentText() {
   currentEl.innerText = `${currentActiveCard + 1}/${cardsEl.length}`
 }
 
-
 createCards();
+
+// Event listeners
+
+nextBtn.addEventListener("click", () => { 
+  cardsEl[currentActiveCard].className = 'card left'; 
+  // The difference is that one modifies the data-structure itself (in-place operation) b += 1 -this is better for Complexity analysis; 
+  // currentActiveCard = currentActiveCard + 1;
+  // while the other just reassigns the variable a = a + 1 .
+  currentActiveCard+=1; 
+
+  if(currentActiveCard > cardsEl.length - 1) { 
+    currentActiveCard = cardsEl.length - 1; 
+  }
+
+  cardsEl[currentActiveCard].className = 'card active';
+
+  updateCurrentText();
+})
+
+
+prevBtn.addEventListener("click", () => { 
+  cardsEl[currentActiveCard].className = 'card right'; 
+  // The difference is that one modifies the data-structure itself (in-place operation) b += 1 -this is better for Complexity analysis; 
+  // currentActiveCard = currentActiveCard + 1;
+  // while the other just reassigns the variable a = a + 1 .
+  currentActiveCard-=1; 
+
+  if(currentActiveCard < 0) { 
+    currentActiveCard = 0; 
+  }
+
+  cardsEl[currentActiveCard].className = 'card active';
+
+  updateCurrentText();
+})
+
+
