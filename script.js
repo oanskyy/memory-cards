@@ -16,23 +16,23 @@ let currentActiveCard = 0;
 // Store DOM cards
 const cardsEl = [];
 
-// Store card data
-// const cardsData = getCardsData();
+Store card data
+const cardsData = getCardsData();
 
-const cardsData = [
-  {
-    question: 'What must a variable begin with?',
-    answer: 'A letter, $ or _'
-  },
-  {
-    question: 'What is a variable?',
-    answer: 'Container for a piece of data'
-  },
-  {
-    question: 'Example of Case Sensitive Variable',
-    answer: 'thisIsAVariable'
-  }
-];
+// const cardsData = [
+//   {
+//     question: 'What must a variable begin with?',
+//     answer: 'A letter, $ or _'
+//   },
+//   {
+//     question: 'What is a variable?',
+//     answer: 'Container for a piece of data'
+//   },
+//   {
+//     question: 'Example of Case Sensitive Variable',
+//     answer: 'thisIsAVariable'
+//   }
+// ];
 
 
 // Create all cards
@@ -80,6 +80,15 @@ function updateCurrentText() {
   currentEl.innerText = `${currentActiveCard + 1}/${cardsEl.length}`
 }
 
+// Get cards from local storage
+function getCardsData() { 
+  // use the API which is local storage and then the getItem
+  // localStorage only stores 'strings', so we will take the array and turn it into a string and then store it
+  // when we take it back out, we need to parse it back into an array, so we run it thru JSON.parse()
+  const cards = JSON.parse(localStorage.getItem("cards"));
+  return cards === null ? [] : cards;
+}
+
 createCards();
 
 // Event listeners
@@ -117,4 +126,4 @@ prevBtn.addEventListener("click", () => {
   updateCurrentText();
 })
 
-
+// Show add container
